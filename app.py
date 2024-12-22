@@ -70,7 +70,7 @@ if st.button("Predict"):
         result, detected_labels = check_if_normal(prediction, targets)
 
         # Display prediction results
-        st.markdown(f"## **Prediction Result:** {result}")
+        st.markdown(f"## **Prediction Result:** endl{result}")
 
         # Visualize user answers
         yes_count = sum(value == 1 for value in answers.values())
