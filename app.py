@@ -83,7 +83,7 @@ if st.button("Predict"):
 
         fig, ax = plt.subplots()
         ax.pie(counts, labels=labels, autopct=lambda p: f'{p:.1f}% ({int(p * total / 100)})', 
-               colors=['green', 'red'], startangle=90, textprops={'fontsize': 12})
+               colors=['green', 'red'], startangle=60, textprops={'fontsize': 12})
         ax.set_title('Your Answer Distribution')
         st.pyplot(fig)
 
