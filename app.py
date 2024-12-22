@@ -91,7 +91,7 @@ if st.button("Predict"):
             startangle=60, 
             textprops={'fontsize': 10}  # Adjust text size
         )
-        ax.set_title('Your Answer Distribution', fontsize=12)
+        ax.set_title('Your Answer Distribution', fontsize=8)
         st.pyplot(fig)
 
         # Display counts and percentages
