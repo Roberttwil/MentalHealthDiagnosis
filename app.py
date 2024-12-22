@@ -43,18 +43,20 @@ questions = features.columns
 # Streamlit UI
 st.title("Mental Health Prediction")
 
-st.write("Please answer the following questions by selecting Yes or No:")
+st.write("<h3>Please answer the following questions by selecting Yes or No:</h3>", unsafe_allow_html=True)
 
 answers = {}
 
 # User input for each symptom
 for idx, question in enumerate(questions):
     question_translated = question.replace('_', ' ').capitalize()
-    question_with_number = f"{idx+1}. Do you experience {question_translated}?"
+    question_with_number = f"<h5>{idx+1}. Do you experience {question_translated}?</h5>"
     answer = st.radio(
         question_with_number,
         options=['Not selected', 'Yes', 'No'],
-        index=0
+        index=0,
+        key=idx,
+        label_visibility="collapsed"  # To avoid showing a label since we're using HTML
     )
     if answer == 'Not selected':
         answers[question] = None
@@ -63,14 +65,14 @@ for idx, question in enumerate(questions):
 
 if st.button("Predict"):
     if None in answers.values():
-        st.write("Please complete all the questions before proceeding!")
+        st.write("<h4 style='color: red;'>Please complete all the questions before proceeding!</h4>", unsafe_allow_html=True)
     else:
         user_input = np.array([list(answers.values())]).reshape(1, -1)
         prediction = model.predict(user_input)
         result, detected_labels = check_if_normal(prediction, targets)
 
         # Display prediction results
-        st.write(f"Prediction Result: {result}")
+        st.write(f"<h2 style='color: blue;'>Prediction Result: {result}</h2>", unsafe_allow_html=True)
 
         # Visualize user answers
         yes_count = sum(value == 1 for value in answers.values())
@@ -89,18 +91,18 @@ if st.button("Predict"):
             autopct=lambda p: f'{p:.1f}% ({int(p * total / 100)})', 
             colors=['green', 'red'], 
             startangle=60, 
-            textprops={'fontsize': 10}  # Adjust text size
+            textprops={'fontsize': 8}  # Smaller text
         )
-        ax.set_title('Your Answer Distribution', fontsize=8)
+        ax.set_title('Your Answer Distribution', fontsize=10)
         st.pyplot(fig)
 
         # Display counts and percentages
-        st.write(f"Number of 'Yes' answers: {yes_count} ({percentages[0]:.1f}%)")
-        st.write(f"Number of 'No' answers: {no_count} ({percentages[1]:.1f}%)")
+        st.write(f"<h4>Number of 'Yes' answers: {yes_count} ({percentages[0]:.1f}%)</h4>", unsafe_allow_html=True)
+        st.write(f"<h4>Number of 'No' answers: {no_count} ({percentages[1]:.1f}%)</h4>", unsafe_allow_html=True)
 
         # Display recommendations if any mental illness is detected
         if detected_labels:
             st.subheader("Recommendations for You:")
             recommendations = get_recommendations(detected_labels)
             for rec in recommendations:
-                st.write(f"- {rec}")
+                st.write(f"<p>- {rec}</p>", unsafe_allow_html=True)
