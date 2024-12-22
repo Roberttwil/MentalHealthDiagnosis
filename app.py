@@ -82,7 +82,7 @@ if st.button("Predict"):
         percentages = [count / total * 100 for count in counts]
 
         # Adjust the figure size to make the chart smaller
-        fig, ax = plt.subplots(figsize=(4, 4))  # Smaller size
+        fig, ax = plt.subplots(figsize=(2, 2))  # Smaller size
         ax.pie(
             counts, 
             labels=labels, 
