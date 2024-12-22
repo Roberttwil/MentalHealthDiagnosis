@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 def check_if_normal(predictions, targets):
     if predictions.ndim == 1:
         predictions = predictions.reshape(1, -1)
-
     if np.all(predictions == 0):
         return "Normal", []
     else:
@@ -43,21 +42,19 @@ questions = features.columns
 # Streamlit UI
 st.title("Mental Health Prediction")
 
-# Teks instruksi dengan ukuran lebih besar
-st.write("<h3>Please answer the following questions by selecting Yes or No:</h3>", unsafe_allow_html=True)
+st.write("### Please answer the following questions by selecting Yes or No:")
 
 answers = {}
 
 # User input for each symptom
 for idx, question in enumerate(questions):
     question_translated = question.replace('_', ' ').capitalize()
-    question_with_number = f"<h5>{idx+1}. Do you experience {question_translated}?</h5>"
+    question_with_number = f"**{idx+1}. Do you experience {question_translated}?**"
     answer = st.radio(
         question_with_number,
         options=['Not selected', 'Yes', 'No'],
         index=0,
-        key=idx,
-        label_visibility="collapsed"
+        key=f"q_{idx}"  # Ensure unique keys for Streamlit widgets
     )
     if answer == 'Not selected':
         answers[question] = None
@@ -66,14 +63,14 @@ for idx, question in enumerate(questions):
 
 if st.button("Predict"):
     if None in answers.values():
-        st.write("<h4 style='color: red;'>Please complete all the questions before proceeding!</h4>", unsafe_allow_html=True)
+        st.write("### Please complete all the questions before proceeding!")
     else:
         user_input = np.array([list(answers.values())]).reshape(1, -1)
         prediction = model.predict(user_input)
         result, detected_labels = check_if_normal(prediction, targets)
 
-        # Display prediction results with larger text
-        st.write(f"<h2 style='color: blue;'>Prediction Result: {result}</h2>", unsafe_allow_html=True)
+        # Display prediction results
+        st.markdown(f"## **Prediction Result:** {result}")
 
         # Visualize user answers
         yes_count = sum(value == 1 for value in answers.values())
@@ -84,26 +81,26 @@ if st.button("Predict"):
         counts = [yes_count, no_count]
         percentages = [count / total * 100 for count in counts]
 
-        # Adjust the figure size and text in chart
-        fig, ax = plt.subplots(figsize=(3, 3))  # Smaller size
+        # Adjust the figure size and text size for the chart
+        fig, ax = plt.subplots(figsize=(2, 2))  # Smaller size
         ax.pie(
             counts, 
             labels=labels, 
             autopct=lambda p: f'{p:.1f}% ({int(p * total / 100)})', 
             colors=['green', 'red'], 
             startangle=60, 
-            textprops={'fontsize': 8}  # Smaller text
+            textprops={'fontsize': 8}  # Smaller text size
         )
         ax.set_title('Your Answer Distribution', fontsize=10)
         st.pyplot(fig)
 
-        # Display counts and percentages with larger text
-        st.write(f"<h4>Number of 'Yes' answers: {yes_count} ({percentages[0]:.1f}%)</h4>", unsafe_allow_html=True)
-        st.write(f"<h4>Number of 'No' answers: {no_count} ({percentages[1]:.1f}%)</h4>", unsafe_allow_html=True)
+        # Display counts and percentages
+        st.markdown(f"### Number of 'Yes' answers: {yes_count} ({percentages[0]:.1f}%)")
+        st.markdown(f"### Number of 'No' answers: {no_count} ({percentages[1]:.1f}%)")
 
         # Display recommendations if any mental illness is detected
         if detected_labels:
             st.subheader("Recommendations for You:")
             recommendations = get_recommendations(detected_labels)
             for rec in recommendations:
-                st.write(f"<p>- {rec}</p>", unsafe_allow_html=True)
+                st.write(f"- {rec}")
