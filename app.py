@@ -81,10 +81,17 @@ if st.button("Predict"):
         counts = [yes_count, no_count]
         percentages = [count / total * 100 for count in counts]
 
-        fig, ax = plt.subplots()
-        ax.pie(counts, labels=labels, autopct=lambda p: f'{p:.1f}% ({int(p * total / 100)})', 
-               colors=['green', 'red'], startangle=60, textprops={'fontsize': 12})
-        ax.set_title('Your Answer Distribution')
+        # Adjust the figure size to make the chart smaller
+        fig, ax = plt.subplots(figsize=(4, 4))  # Smaller size
+        ax.pie(
+            counts, 
+            labels=labels, 
+            autopct=lambda p: f'{p:.1f}% ({int(p * total / 100)})', 
+            colors=['green', 'red'], 
+            startangle=60, 
+            textprops={'fontsize': 10}  # Adjust text size
+        )
+        ax.set_title('Your Answer Distribution', fontsize=12)
         st.pyplot(fig)
 
         # Display counts and percentages
