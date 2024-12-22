@@ -69,8 +69,8 @@ if st.button("Predict"):
         prediction = model.predict(user_input)
         result, detected_labels = check_if_normal(prediction, targets)
 
-        # Display prediction results
-        st.markdown(f"## **Prediction Result:** \n\n{result}")
+        # Display prediction results with larger font
+        st.markdown(f"## <span style='font-size: 24px; font-weight: bold;'>{result}</span>", unsafe_allow_html=True)
 
         # Visualize user answers
         yes_count = sum(value == 1 for value in answers.values())
@@ -98,9 +98,9 @@ if st.button("Predict"):
         st.markdown(f"### Number of 'Yes' answers: {yes_count} ({percentages[0]:.1f}%)")
         st.markdown(f"### Number of 'No' answers: {no_count} ({percentages[1]:.1f}%)")
 
-        # Display recommendations if any mental illness is detected
+        # Display recommendations with larger font
         if detected_labels:
-            st.subheader("Recommendations for You:")
+            st.subheader("<span style='font-size: 20px; font-weight: bold;'>Recommendations for You:</span>", unsafe_allow_html=True)
             recommendations = get_recommendations(detected_labels)
             for rec in recommendations:
-                st.write(f"- {rec}")
+                st.markdown(f"<p style='font-size: 18px;'>{rec}</p>", unsafe_allow_html=True)
