@@ -43,6 +43,7 @@ questions = features.columns
 # Streamlit UI
 st.title("Mental Health Prediction")
 
+# Teks instruksi dengan ukuran lebih besar
 st.write("<h3>Please answer the following questions by selecting Yes or No:</h3>", unsafe_allow_html=True)
 
 answers = {}
@@ -56,7 +57,7 @@ for idx, question in enumerate(questions):
         options=['Not selected', 'Yes', 'No'],
         index=0,
         key=idx,
-        label_visibility="collapsed"  # To avoid showing a label since we're using HTML
+        label_visibility="collapsed"
     )
     if answer == 'Not selected':
         answers[question] = None
@@ -71,7 +72,7 @@ if st.button("Predict"):
         prediction = model.predict(user_input)
         result, detected_labels = check_if_normal(prediction, targets)
 
-        # Display prediction results
+        # Display prediction results with larger text
         st.write(f"<h2 style='color: blue;'>Prediction Result: {result}</h2>", unsafe_allow_html=True)
 
         # Visualize user answers
@@ -83,7 +84,7 @@ if st.button("Predict"):
         counts = [yes_count, no_count]
         percentages = [count / total * 100 for count in counts]
 
-        # Adjust the figure size to make the chart smaller
+        # Adjust the figure size and text in chart
         fig, ax = plt.subplots(figsize=(3, 3))  # Smaller size
         ax.pie(
             counts, 
@@ -96,7 +97,7 @@ if st.button("Predict"):
         ax.set_title('Your Answer Distribution', fontsize=10)
         st.pyplot(fig)
 
-        # Display counts and percentages
+        # Display counts and percentages with larger text
         st.write(f"<h4>Number of 'Yes' answers: {yes_count} ({percentages[0]:.1f}%)</h4>", unsafe_allow_html=True)
         st.write(f"<h4>Number of 'No' answers: {no_count} ({percentages[1]:.1f}%)</h4>", unsafe_allow_html=True)
 
