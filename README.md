@@ -1,6 +1,6 @@
 # 🧠 Mental Health Diagnosis Tool
 
-This is a **Streamlit-based Mental Health Prediction Web App** that uses user responses to assess potential mental health conditions like *Bipolar Disorder* and *Schizophrenia*. The tool is based on **DSM-5 diagnostic criteria** and provides visual feedback and recommendations.
+This is a **Streamlit-based Mental Health Prediction Web App** that uses user responses to assess potential mental health conditions like *Bipolar Disorder* , *Schizophrenia* , *Depression* , *Anxiety Disorder* , and *PTSD*. The tool is based on **DSM-5 diagnostic criteria** and provides visual feedback and recommendations.
 
 ---
 
