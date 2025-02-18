@@ -1,6 +1,3 @@
-# Code to generate a README.md for Mental Health Diagnosis Tool
-
-readme_content = """
 # 🧠 Mental Health Diagnosis Tool
 
 This is a **Streamlit-based Mental Health Prediction Web App** that uses user responses to assess potential mental health conditions like *Bipolar Disorder* and *Schizophrenia*. The tool is based on **DSM-5 diagnostic criteria** and provides visual feedback and recommendations.
@@ -9,10 +6,10 @@ This is a **Streamlit-based Mental Health Prediction Web App** that uses user re
 
 ## 📸 Screenshots
 ### Prediction Results
-![Prediction Results](path/to/your-image1.png)
+![Prediction Results](result.jpg)
 
 ### Questionnaire
-![Questionnaire Screenshot](path/to/your-image2.png)
+![Questionnaire Screenshot](Questionnaire.jpg)
 
 ---
 
